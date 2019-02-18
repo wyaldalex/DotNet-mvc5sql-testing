@@ -1,0 +1,31 @@
+﻿@model AireSpringMVCAlexanderAlvarenga.Models.ViewModels.BrandViewModel
+
+<table>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.brand.BrandId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.brand.BrandName)
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.listBrands)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BrandId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BrandName)
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</table>

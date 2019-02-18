@@ -1,0 +1,94 @@
+﻿@model AireSpringMVCAlexanderAlvarenga.Models.ViewModels.ModelView
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script>
+    function SuccessMessage() {
+        console.log("Succcess Post");
+    }
+    function FailMessage() {
+        console.log("Fail Post");
+    }
+</script>
+
+<h2>Model Index</h2>
+
+<h2>Add Brand</h2>
+<div>
+    @using (Ajax.BeginForm("AddModel", "Model", null, new AjaxOptions
+    {
+        HttpMethod = "POST",
+        OnSuccess = "SuccessMessage",
+        OnFailure = "FailMessage",
+        UpdateTargetId = "resultTarget",
+
+    },
+    new { id = "FormId" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.DisplayNameFor(model => model.model.ModelName)
+        @Html.EditorFor(x => x.model.ModelName)
+        @Html.DisplayNameFor(model => model.model.Price)
+        @Html.EditorFor(x => x.model.Price)
+      
+    <div>
+        <div>Select brand</div>
+        <select class="form-control" id="BrandId" name="BrandId">
+            @foreach (var item in Model.brands)
+            {
+                <option value="@item.BrandId">@item.BrandName</option>
+            }
+        </select>
+    </div>
+
+        <input type="submit" value="Add Model" />
+
+    }
+
+</div>
+<div id="resultTarget">
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.model.ModelId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.model.ModelName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.model.BrandName)
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.models)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModelId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModelName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BrandName)
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+

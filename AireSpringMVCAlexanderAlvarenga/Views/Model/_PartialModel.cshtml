@@ -1,0 +1,39 @@
+﻿@model AireSpringMVCAlexanderAlvarenga.Models.ViewModels.ModelView
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.model.ModelId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.model.ModelName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.model.BrandName)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.models)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModelId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModelName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BrandName)
+            </td>
+        </tr>
+    }
+
+</table>

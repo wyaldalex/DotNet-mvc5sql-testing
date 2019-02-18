@@ -1,0 +1,76 @@
+﻿@model AireSpringMVCAlexanderAlvarenga.Models.ViewModels.BrandViewModel
+
+@{
+    ViewBag.Title = "Brand Index";
+}
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script>
+    function SuccessMessage() {
+        console.log("Succcess Post");
+        return false;
+    }
+    function FailMessage() {
+        console.log("Fail Post");
+        return false;
+    }
+</script>
+
+<h2>Index</h2>
+
+<h2>Add Brand</h2>
+
+@using (Ajax.BeginForm("GetBrands", "Brand", null, new AjaxOptions
+{
+    HttpMethod = "POST",
+    OnSuccess = "SuccessMessage",
+    OnFailure = "FailMessage",
+    UpdateTargetId = "resultTarget",
+
+},
+new { id = "FormId" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.DisplayNameFor(model => model.brand.BrandName)
+    @Html.EditorFor(x => x.brand.BrandName)
+    <input type="submit" value="Add Brand" />
+
+}
+
+
+<div id="resultTarget">
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.brand.BrandId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.brand.BrandName)
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.listBrands)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BrandId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BrandName)
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+
