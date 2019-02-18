@@ -14,27 +14,46 @@ namespace AireSpringMVCAlexanderAlvarenga.Controllers
         // GET: Cars
         public ActionResult Index()
         {
-            BrandViewModel bvm = new BrandViewModel();
-            CarQuerys queries = new CarQuerys();
-            var brands = queries.getAllBrands();
+            try
+            {
+                BrandViewModel bvm = new BrandViewModel();
+                CarQuerys queries = new CarQuerys();
+                var brands = queries.getAllBrands();
 
-            bvm.brand = new Brand();
-            bvm.listBrands = brands;
-            return View(bvm);
+                bvm.brand = new Brand();
+                bvm.listBrands = brands;
+                return View(bvm);
+            }
+            catch (Exception ex)
+            {
+
+                return View("Error", new HandleErrorInfo(ex, "Brand", "Index"));
+            }
+            
         }
 
         [HttpPost]
         public ActionResult GetBrands(Brand brand)
         {
-            CarQuerys queries = new CarQuerys();
-            BrandViewModel bvm = new BrandViewModel();
+            try
+            {
+                CarQuerys queries = new CarQuerys();
+                BrandViewModel bvm = new BrandViewModel();
 
-            queries.insertBrand(brand.BrandName);
-            var brands = queries.getAllBrands();
+                queries.insertBrand(brand.BrandName);
+                var brands = queries.getAllBrands();
 
-            bvm.brand = new Brand();
-            bvm.listBrands = brands;
-            return PartialView("_PartialBrand", bvm);
+                bvm.brand = new Brand();
+                bvm.listBrands = brands;
+                return PartialView("_PartialBrand", bvm);
+            }
+            catch (Exception ex)
+            {
+
+                return View("Error", new HandleErrorInfo(ex, "Brand", "Index"));
+            }
+
+            
         }
     }
 }

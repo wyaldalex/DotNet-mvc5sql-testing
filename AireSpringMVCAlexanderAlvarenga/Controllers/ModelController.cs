@@ -14,37 +14,55 @@ namespace AireSpringMVCAlexanderAlvarenga.Controllers
         // GET: Model
         public ActionResult ModelDashboard()
         {
-            ModelView modelV = new ModelView();
-            CarQuerys queries = new CarQuerys();
-            List<Model> models = queries.getAllModels();
-            //for dropdowns
-            List<Brand> brands = queries.getAllBrands();
+            try
+            {
+                ModelView modelV = new ModelView();
+                CarQuerys queries = new CarQuerys();
+                List<Model> models = queries.getAllModels();
+                //for dropdowns
+                List<Brand> brands = queries.getAllBrands();
 
-            modelV.models = models;
-            modelV.brands = brands;
-            modelV.brand = new Brand();
-            modelV.model = new Model();
+                modelV.models = models;
+                modelV.brands = brands;
+                modelV.brand = new Brand();
+                modelV.model = new Model();
 
-            return View(modelV);
+                return View(modelV);
+            }
+            catch (Exception ex)
+            {
+
+                return View("Error", new HandleErrorInfo(ex, "Model", "ModelDashboard"));
+            }
+            
         }
 
         [HttpPost]
         public ActionResult AddModel(Model model, int BrandId)
         {
-            CarQuerys queries = new CarQuerys();
-            ModelView modelV = new ModelView();
-            model.BrandId = BrandId;
-            queries.insertModel(model);
-            var brands = queries.getAllBrands();
-            
-            List<Model> models = queries.getAllModels();
-            //for dropdowns
+            try
+            {
+                CarQuerys queries = new CarQuerys();
+                ModelView modelV = new ModelView();
+                model.BrandId = BrandId;
+                queries.insertModel(model);
+                var brands = queries.getAllBrands();
 
-            modelV.models = models;
-            modelV.brands = brands;
-            modelV.brand = new Brand();
-            modelV.model = new Model();
-            return PartialView("_PartialModel",modelV );
+                List<Model> models = queries.getAllModels();
+                //for dropdowns
+
+                modelV.models = models;
+                modelV.brands = brands;
+                modelV.brand = new Brand();
+                modelV.model = new Model();
+                return PartialView("_PartialModel", modelV);
+            }
+            catch (Exception ex)
+            {
+
+                return View("Error", new HandleErrorInfo(ex, "Model", "AddModel"));
+            }
+           
         }
     }
 }
