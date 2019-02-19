@@ -49,7 +49,7 @@ namespace AireSpringMVCAlexanderAlvarenga.Controllers
                 var brands = queries.getAllBrands();
 
                 List<Model> models = queries.getAllModels();
-                //for dropdowns
+
 
                 modelV.models = models;
                 modelV.brands = brands;
@@ -63,6 +63,33 @@ namespace AireSpringMVCAlexanderAlvarenga.Controllers
                 return View("Error", new HandleErrorInfo(ex, "Model", "AddModel"));
             }
            
+        }
+
+
+        [HttpPost]
+        public ActionResult FilterByPrice(Double minRange, Double maxRange)
+        {
+            try
+            {
+                CarQuerys queries = new CarQuerys();
+                ModelView modelV = new ModelView();
+                var brands = queries.getAllBrands();
+
+                List<Model> models = queries.filterRangePrice(minRange,maxRange);
+
+
+                modelV.models = models;
+                modelV.brands = brands;
+                modelV.brand = new Brand();
+                modelV.model = new Model();
+                return PartialView("_PartialModel", modelV);
+            }
+            catch (Exception ex)
+            {
+
+                return View("Error", new HandleErrorInfo(ex, "Model", "AddModel"));
+            }
+
         }
     }
 }

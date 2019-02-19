@@ -83,6 +83,49 @@ namespace CarDBSql.Querys
             }
         }
 
+        public List<Model> filterRangePrice(Double minRange, Double maxRange)
+        {
+            var modelList = new List<Model>();
+            try
+            {
+                using (SqlConnection connection = DBConnection.getConnection())
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("SELECT Model.ModelId, Model.Name, Model.Price, Brand.Name  AS Brand, Brand.BrandId FROM Model, Brand WHERE Model.BrandId = Brand.BrandId ");
+                    sb.Append("AND Model.Price BETWEEN @minRange AND @maxRange;");
+                    string sql = sb.ToString();
+
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@minRange", minRange);
+                        command.Parameters.AddWithValue("@maxRange", maxRange);
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Model model = new Model();
+                                model.ModelId = reader.GetInt32(0);
+                                model.ModelName = reader.GetString(1);
+                                model.Price = reader.GetDouble(2); //(reader.GetFloat(2)
+                                model.BrandName = reader.GetString(3);
+                                model.BrandId = reader.GetInt32(4);
+                                modelList.Add(model);
+                            }
+                        }
+                    }
+
+                    return modelList;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return null;
+            }
+        }
+
 
         public void insertBrand(string brandName)
         {

@@ -17,7 +17,7 @@
 
 <h2>Model Index</h2>
 
-<h2>Add Brand</h2>
+<h2>Add Model</h2>
 <div>
     @using (Ajax.BeginForm("AddModel", "Model", null, new AjaxOptions
     {
@@ -48,6 +48,25 @@
         <input type="submit" value="Add Model" />
 
     }
+
+        <div>
+            <h2>Filter Model</h2>
+            @using (Ajax.BeginForm("FilterByPrice", "Model", null, new AjaxOptions
+            {
+                HttpMethod = "POST",
+                OnSuccess = "SuccessMessage",
+                OnFailure = "FailMessage",
+                UpdateTargetId = "resultTarget",
+
+            },
+      new { id = "FormId" }))
+            {
+                <input type="number" id="minRange" name="minRange">
+                <input type="number" id="maxRange" name="maxRange">
+                <input type="submit" value="Filter Model By Price" />
+
+            }
+        </div>
 
 </div>
 <div id="resultTarget">
